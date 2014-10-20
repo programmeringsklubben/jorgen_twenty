@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <title>Försten till tjugo</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <link href='http://fonts.googleapis.com/css?family=Fascinate' rel='stylesheet' type='text/css'>
+    <style type="text/css" media="screen">
+        ul {
+            list-style-type: none;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        li {
+            display: inline;
+            font-size: 24px;
+            color: #eeeeee;
+            transition: color .8s ease;
+        }
+        .selectable {
+            font-size: 48px;
+            color: #222222;
+            /*transition: font-size, .3s ease;*/
+        }
+        /*.selectable:hover {*/
+            /*font-size: 72px;*/
+            /*transition: font-size, .3s ease;*/
+        /*}*/
+        .message {
+            text-align: center;
+            font-size: 36px;
+            font-family: 'Fascinate', cursive;
+        }
+    </style>
+    <script type="text/javascript">
+        $(function () {
+            page.setupClickListener();
+            page.selectGood();
+            page.updateSelectable();
+        });
+        var page = {
+            good: [2, 5, 8, 11, 14, 17, 20],
+            number: 2,
+            player_number: 0,
+            setupClickListener: function () {
+                $(document).on('click', 'li.selectable', function () {
+                    page.playerSelected($(this).text());
+                    page.selectGood();
+                    page.updateSelectable();
+                });
+            },
+            playerSelected: function (clickedNumber) {
+                page.player_number = parseInt(clickedNumber);
+                $('#msg1').text('Du valde ' + page.player_number);
+            },
+            selectGood: function () {
+                page.current = page.player_number + 1;
+                if($.inArray(page.current, page.good) == -1) {
+                    page.current++;
+                }
+                if(page.current === 20) {
+                    $('#msg2').text('Ha, jag väljer 20! Jag är bäst!');
+                }
+                else {
+                    $('#msg2').text('Jag väljer ' + page.current);
+                }
+            },
+            updateSelectable: function () {
+                $('li').removeClass('selectable');
+                if(page.current == 20) {
+                    $('#20').addClass('selectable')
+                    $(document).off('click', 'li.selectable');
+                }
+                else {
+                    var first = $('#' + (page.current + 1));
+                    first.addClass('selectable');
+                    first.next().addClass('selectable');
+                }
+            }
+        };
+    </script>
+</head>
+<body>
+<ul>
+    <li id="1">1</li>
+    <li id="2">2</li>
+    <li id="3">3</li>
+    <li id="4">4</li>
+    <li id="5">5</li>
+    <li id="6">6</li>
+    <li id="7">7</li>
+    <li id="8">8</li>
+    <li id="9">9</li>
+    <li id="10">10</li>
+    <li id="11">11</li>
+    <li id="12">12</li>
+    <li id="13">13</li>
+    <li id="14">14</li>
+    <li id="15">15</li>
+    <li id="16">16</li>
+    <li id="17">17</li>
+    <li id="18">18</li>
+    <li id="19">19</li>
+    <li id="20">20</li>
+</ul>
+<div id="msg1" class="message">Först till 20. Jag börjar!</div>
+<div id="msg2" class="message"></div>
+</body>
+</html>
