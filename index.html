@@ -32,53 +32,6 @@
             font-family: 'Fascinate', cursive;
         }
     </style>
-    <script type="text/javascript">
-        $(function () {
-            page.setupClickListener();
-            page.selectGood();
-            page.updateSelectable();
-        });
-        var page = {
-            good: [2, 5, 8, 11, 14, 17, 20],
-            number: 2,
-            player_number: 0,
-            setupClickListener: function () {
-                $(document).on('click', 'li.selectable', function () {
-                    page.playerSelected($(this).text());
-                    page.selectGood();
-                    page.updateSelectable();
-                });
-            },
-            playerSelected: function (clickedNumber) {
-                page.player_number = parseInt(clickedNumber);
-                $('#msg1').text('Du valde ' + page.player_number);
-            },
-            selectGood: function () {
-                page.current = page.player_number + 1;
-                if($.inArray(page.current, page.good) == -1) {
-                    page.current++;
-                }
-                if(page.current === 20) {
-                    $('#msg2').text('Ha, jag väljer 20! Jag är bäst!');
-                }
-                else {
-                    $('#msg2').text('Jag väljer ' + page.current);
-                }
-            },
-            updateSelectable: function () {
-                $('li').removeClass('selectable');
-                if(page.current == 20) {
-                    $('#20').addClass('selectable')
-                    $(document).off('click', 'li.selectable');
-                }
-                else {
-                    var first = $('#' + (page.current + 1));
-                    first.addClass('selectable');
-                    first.next().addClass('selectable');
-                }
-            }
-        };
-    </script>
 </head>
 <body>
 <ul>
@@ -105,5 +58,13 @@
 </ul>
 <div id="msg1" class="message">Först till 20. Jag börjar!</div>
 <div id="msg2" class="message"></div>
+<script src="page.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            page.setupClickListener();
+            page.selectGood();
+            page.updateSelectable();
+        });
+    </script>
 </body>
 </html>
